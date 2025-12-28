@@ -21,3 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "File Storage"
 include(":app")
+include(":core:model")
+include(":core:common")
+include(":core:domain")
+include(":core:data")
+include(":feature:files")
