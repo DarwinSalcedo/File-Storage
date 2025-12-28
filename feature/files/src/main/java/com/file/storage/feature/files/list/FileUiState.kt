@@ -1,4 +1,4 @@
-package com.file.storage.feature.files
+package com.file.storage.feature.files.list
 
 import com.file.storage.core.model.FileModel
 

@@ -1,6 +1,5 @@
 package com.file.storage.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,7 +13,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,9 +28,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.file.storage.core.model.FileType
-import com.file.storage.feature.files.FileFormScreen
-import com.file.storage.feature.files.FileListScreen
-import com.file.storage.feature.files.SettingsDialog
+import com.file.storage.feature.files.form.FileFormScreen
+import com.file.storage.feature.files.list.FileListScreen
+import com.file.storage.feature.files.setting.SettingsDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

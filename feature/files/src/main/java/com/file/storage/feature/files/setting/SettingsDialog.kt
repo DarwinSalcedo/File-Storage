@@ -1,4 +1,4 @@
-package com.file.storage.feature.files
+package com.file.storage.feature.files.setting
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.file.storage.feature.files.setting.SettingsViewModel
 
 @Composable
 fun SettingsDialog(

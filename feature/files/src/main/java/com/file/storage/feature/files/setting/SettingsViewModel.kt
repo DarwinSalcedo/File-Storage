@@ -1,4 +1,4 @@
-package com.file.storage.feature.files
+package com.file.storage.feature.files.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

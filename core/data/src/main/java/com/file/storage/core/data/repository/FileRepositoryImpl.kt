@@ -1,5 +1,6 @@
 package com.file.storage.core.data.repository
 
+import android.net.Uri
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -13,6 +14,7 @@ import com.file.storage.core.domain.repository.FileRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import com.file.storage.core.data.manager.EncryptedFileManager
+import java.io.InputStream
 import javax.inject.Inject
 
 class FileRepositoryImpl @Inject constructor(
@@ -31,10 +33,14 @@ class FileRepositoryImpl @Inject constructor(
         return dao.getById(id)?.toDomain()
     }
 
+    override suspend fun getFileByPath(path: String): InputStream {
+        return fileManager.getInputStream(path)
+    }
+
     override suspend fun saveFile(file: FileModel) {
         val savedPath = if (file.path.startsWith("content://")) {
             try {
-                fileManager.saveImage(android.net.Uri.parse(file.path))
+                fileManager.saveImage(Uri.parse(file.path))
             } catch (e: Exception) {
                 file.path // Fallback or handle error
             }
@@ -42,10 +48,6 @@ class FileRepositoryImpl @Inject constructor(
             file.path
         }
 
-        // Update file with new path (local)
-        // FileModel is immutable (val), need copy.
-        // Kotlin data class copy is available on subclasses but abstract class doesn't expose it easily.
-        // We can reconstruct or cast.
         
         val newFile = when(file) {
             is FileModel.Claim -> file.copy(path = savedPath)

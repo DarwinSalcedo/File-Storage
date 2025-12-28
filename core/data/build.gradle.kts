@@ -42,4 +42,8 @@ dependencies {
     implementation("androidx.hilt:hilt-work:1.2.0")
     
     implementation("net.zetetic:android-database-sqlcipher:4.5.4")
+
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

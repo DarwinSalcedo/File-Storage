@@ -1,4 +1,4 @@
-package com.file.storage.feature.files
+package com.file.storage.feature.files.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,12 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.file.storage.core.model.FileModel
 import com.file.storage.core.model.FileType
+import com.file.storage.feature.files.list.FileUiState
+import com.file.storage.feature.files.list.ListViewModel
 
 @Composable
 fun FileListScreen(
     type: FileType,
     onItemClick: (String) -> Unit,
-    viewModel: FileViewModel = hiltViewModel()
+    viewModel: ListViewModel = hiltViewModel()
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
