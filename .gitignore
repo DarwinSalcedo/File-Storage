@@ -14,3 +14,9 @@
 .cxx
 local.properties
 /.idea/
+/build_output.txt
+/core/common/build/
+/core/data/build/
+/core/domain/build/
+/feature/files/build/
+/core/model/build/
