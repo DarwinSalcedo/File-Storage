@@ -28,8 +28,8 @@ object DataModule {
         return Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "file_storage_db"
-        )
+            "file_storage_db_003"
+        ).openHelperFactory(supportFactory)
         .build()
     }
 

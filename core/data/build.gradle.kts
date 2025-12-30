@@ -40,10 +40,16 @@ dependencies {
 
     implementation(libs.androidx.work.runtime.ktx)
     implementation("androidx.hilt:hilt-work:1.2.0")
+    ksp(libs.androidx.hilt.compiler)
     
     implementation("net.zetetic:android-database-sqlcipher:4.5.4")
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.firestore)
 }

@@ -5,6 +5,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.file.storage.core.data.remote.FileUploader
 import com.file.storage.core.data.local.FileDao
 import com.file.storage.core.data.local.FileEntity
 import com.file.storage.core.data.worker.SyncWorker
@@ -18,29 +19,45 @@ import java.io.InputStream
 import javax.inject.Inject
 
 class FileRepositoryImpl @Inject constructor(
-    private val dao: FileDao,
+    private val localFileDao: FileDao,
     private val workManager: WorkManager,
-    private val fileManager: EncryptedFileManager
+    private val encryptedFileManager: EncryptedFileManager,
+    private val remoteFileUploader: FileUploader
 ) : FileRepository {
 
     override fun getAllFiles(): Flow<List<FileModel>> {
-        return dao.getAll().map { entities ->
+        return localFileDao.getAll().map { entities ->
             entities.map { it.toDomain() }
         }
     }
 
     override suspend fun getFileById(id: String): FileModel? {
-        return dao.getById(id)?.toDomain()
+        return localFileDao.getById(id)?.toDomain()
     }
 
     override suspend fun getFileByPath(path: String): InputStream {
-        return fileManager.getInputStream(path)
+        return encryptedFileManager.getInputStream(path)
+    }
+
+    override suspend fun uploadFile(file: FileModel, inputStream: InputStream): Result<String> {
+        return try {
+            val url = remoteFileUploader.upload(file, inputStream)
+            Result.success(url)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override suspend fun updateStatus(id: String, status: FileStatus) {
+        localFileDao.getById(id)?.let { entity ->
+            localFileDao.insert(entity.copy(status = status.name))
+        }
     }
 
     override suspend fun saveFile(file: FileModel) {
         val savedPath = if (file.path.startsWith("content://")) {
             try {
-                fileManager.saveImage(Uri.parse(file.path))
+                encryptedFileManager.saveImage(Uri.parse(file.path))
             } catch (e: Exception) {
                 file.path // Fallback or handle error
             }
@@ -56,7 +73,7 @@ class FileRepositoryImpl @Inject constructor(
 
         val entity = newFile.toEntity()
 
-        dao.insert(entity)
+        localFileDao.insert(entity)
         
         enqueueSync(entity.id)
     }

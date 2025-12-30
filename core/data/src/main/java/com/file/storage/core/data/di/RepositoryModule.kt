@@ -1,7 +1,9 @@
 package com.file.storage.core.data.di
 
 import com.file.storage.core.data.repository.FileRepositoryImpl
+import com.file.storage.core.data.repository.SettingsRepositoryImpl
 import com.file.storage.core.domain.repository.FileRepository
+import com.file.storage.core.domain.repository.SettingsRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,6 +23,6 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindSettingsRepository(
-        impl: com.file.storage.core.data.repository.SettingsRepositoryImpl
-    ): com.file.storage.core.domain.repository.SettingsRepository
+        impl: SettingsRepositoryImpl
+    ): SettingsRepository
 }

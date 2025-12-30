@@ -35,7 +35,7 @@ object SecurityModule {
     ): SharedPreferences {
         return EncryptedSharedPreferences.create(
             context,
-            "secret_shared_prefs",
+            "secret_shared_prefs_003",
             masterKey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

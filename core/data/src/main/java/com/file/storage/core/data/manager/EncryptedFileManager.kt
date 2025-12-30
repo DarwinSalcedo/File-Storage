@@ -23,15 +23,15 @@ class EncryptedFileManager @Inject constructor(
 
         if (file.exists()) file.delete()
 
-        val encryptedFile = EncryptedFile.Builder(
+       /* val encryptedFile = EncryptedFile.Builder(
             context,
             file,
             masterKey,
             EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
+        ).build()*/
 
         context.contentResolver.openInputStream(uri)?.use { input ->
-            encryptedFile.openFileOutput().use { output ->
+            file.outputStream().use { output ->
                 input.copyTo(output)
             }
         }
@@ -41,12 +41,12 @@ class EncryptedFileManager @Inject constructor(
 
     fun getInputStream(path: String): InputStream {
         val file = File(path)
-        val encryptedFile = EncryptedFile.Builder(
+        /*val encryptedFile = EncryptedFile.Builder(
             context,
             file,
             masterKey,
             EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
-        return encryptedFile.openFileInput()
+        ).build()*/
+        return file.inputStream()
     }
 }
